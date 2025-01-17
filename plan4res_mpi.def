@@ -98,31 +98,6 @@ EOF
     echo 'export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:${P4R_INSTALL}/mpi/lib' >> ${SINGULARITY_ENVIRONMENT}
     . ${SINGULARITY_ENVIRONMENT}
 
-    # Follow instructions at https://github.com/ECP-CANDLE/Distribution
-    #SWIFTT_VERSION=swift-t-1.4.3
-    #wget -q http://swift-lang.github.io/swift-t-downloads/1.4/${SWIFTT_VERSION}.tar.gz
-    #tar xf ${SWIFTT_VERSION}.tar.gz && rm ${SWIFTT_VERSION}.tar.gz
-    #cd ${SWIFTT_VERSION}
-    #./dev/build/init-settings.sh
-    #sed -i "s@^export SWIFT_T_PREFIX=.*@export SWIFT_T_PREFIX=${P4R_INSTALL}/swift-t@" ./dev/build/swift-t-settings.sh
-    #sed -i 's@.*ENABLE_PYTHON=0@ENABLE_PYTHON=1@' ./dev/build/swift-t-settings.sh
-    #./dev/build/build-swift-t.sh > /dev/null
-    #cd .. && rm -rf ${SWIFTT_VERSION}
-
-    # Make swift-t readable for users
-    #find ${P4R_INSTALL}/swift-t -type d -exec chmod a+x {} ';'
-    #chmod -R a+r ${P4R_INSTALL}/swift-t
-
-    # Make the turbine executable
-    #TURBINE_PATH=${P4R_INSTALL}/swift-t/turbine/bin/turbine
-    #chmod +x $TURBINE_PATH
-
-    # Remove the mpiexec call from turbine as mpiexec will be called from
-    # outside the container using the scheduler
-    #sed -i "s@\${TURBINE_LAUNCHER} \${LAUNCH_OPTIONS} \${=TURBINE_INTERPOSER}@@" $TURBINE_PATH
-
-    #echo 'export PATH=${P4R_INSTALL}/swift-t/stc/bin/:${P4R_INSTALL}/swift-t/turbine/bin:$PATH' >> ${SINGULARITY_ENVIRONMENT}
-
     #
     HDF5_VERSION=1.14.3
     HDF5_VERSION_=$(echo "${HDF5_VERSION}" | sed 's/\./_/g')
@@ -162,7 +137,6 @@ EOF
     BOOST_VERSION=1.87.0
     BOOST_VERSION_=$(echo "${BOOST_VERSION}" | sed 's/\./_/g')
     wget -q https://archives.boost.io/release/${BOOST_VERSION}/source/boost_${BOOST_VERSION_}.tar.bz2 
-	#wget -q https://boostorg.jfrog.io/artifactory/main/release/${BOOST_VERSION}/source/boost_${BOOST_VERSION_}.tar.bz2
     tar xf boost_${BOOST_VERSION_}.tar.bz2 && rm boost_${BOOST_VERSION_}.tar.bz2
     mkdir ${P4R_INSTALL}/boost
     cd boost_${BOOST_VERSION_}
